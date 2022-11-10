@@ -11,8 +11,6 @@ app.use(cors());
 app.use(express.json());
 
 
-// console.log(process.env.DB_USER);
-// console.log(process.env.DB_PASSWORD);
 
 
 
@@ -28,7 +26,7 @@ async function run() {
     try{
 
         const serviceCollection = client.db('service-review').collection('services');
-        const orderCollection = client.db('service-review').collection('orders');
+         const orderCollection = client.db('service-review').collection('orders');
 
         app.get('/services', async (req, res) => {
             const query = {}
@@ -45,22 +43,11 @@ async function run() {
         });
 
 
-        app.get('/orders', async (req, res) => {
-            let query = {};
-            const cursor = orderCollection.find(query);
-            const orders = await cursor.toArray();
-            res.send(orders);
+        app.post('/orders', async (req, res) => {
+            const order = req.body;
+            const result = await orderCollection.insertOne(order);
+            res.send(result);
         });
-// hsgjgdg
-// gfgwdegwdwed
-
-
-
-
-
-
-
-
 
 
 
